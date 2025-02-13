@@ -41,7 +41,7 @@ public class MoveBlocks : MonoBehaviour
             scrambleBlocks.Scramble();
         }
     }
-    void Move(Vector3Int direction)
+    public void Move(Vector3Int direction)
     {
         foreach (var block in spawnBlocks.activeBlocks)
         {

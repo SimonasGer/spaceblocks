@@ -13,10 +13,12 @@ public class BlockControler : MonoBehaviour
     public DeleteBlocks deleteBlocks;
     public Combo combo;
     public GameOver gameOver;
+    public TouchInput touchInput;
+    public float gameSpeed, gamePace, maxSpeed;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        InvokeRepeating(nameof(Cycle), 1.0f, 0.5f);
+        InvokeRepeating(nameof(Cycle), 1.0f, gameSpeed);
     }
     void Cycle()
     {
@@ -55,6 +57,10 @@ public class BlockControler : MonoBehaviour
         Debug.Log("Spawn State");
         spawnBlocks.SpawnShape();
         combo.ShowCombo(false);
+        if(maxSpeed < gameSpeed)
+        {
+            gameSpeed -= gamePace;
+        }
         state = 2;
     }
     void MoveState()
@@ -83,6 +89,8 @@ public class BlockControler : MonoBehaviour
         if(state == 2)
         {
             moveBlocks.MoveInput();
+            touchInput.DetectSwipe();
+            touchInput.DetectTap();
         }
         if(state == 5)
         {
