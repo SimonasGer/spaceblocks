@@ -10,6 +10,10 @@ public class DeleteBlocks : MonoBehaviour
     private List<Vector3Int> matchedBlocks;
     private Vector3Int[][] directions;
     public BlockControler blockControler;
+    public GameOver gameOver;
+    public Score score;
+    public Combo combo;
+    private int multiplier = 1;
     private bool anyTileDeleted;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -54,18 +58,31 @@ public class DeleteBlocks : MonoBehaviour
         {
             blockControler.state = 3;
         } else {
-            blockControler.state = 1;
+            if(gameOver.CheckHeightLimit())
+            {
+                blockControler.state = 5;
+            } else 
+            {
+                blockControler.state = 1;
+            }
+            multiplier = 1;
         }
-        
 
     }
     public void DeleteMatchedBlocks()
     {
         foreach (var block in matchedBlocks)
         {
+            score.AddScore(multiplier);
             inactive.SetTile(block, null);
         }
         matchedBlocks.Clear();
         anyTileDeleted = true;
+        if(multiplier > 1)
+        {
+            combo.UpdateCombo(multiplier);
+            combo.ShowCombo(true);
+        }
+        multiplier++;
     }
 }

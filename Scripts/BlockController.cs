@@ -11,6 +11,8 @@ public class BlockControler : MonoBehaviour
     public TurnInactive turnInactive;
     public FallInactiveBlocks fallInactiveBlocks;
     public DeleteBlocks deleteBlocks;
+    public Combo combo;
+    public GameOver gameOver;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -35,6 +37,9 @@ public class BlockControler : MonoBehaviour
             case 4:
                 ClearState();
                 break;
+            case 5:
+                OverState();
+                break;
             default:
                 return;
         }
@@ -49,6 +54,7 @@ public class BlockControler : MonoBehaviour
     {
         Debug.Log("Spawn State");
         spawnBlocks.SpawnShape();
+        combo.ShowCombo(false);
         state = 2;
     }
     void MoveState()
@@ -59,6 +65,7 @@ public class BlockControler : MonoBehaviour
     void InactiveState()
     {
         Debug.Log("Inactive State");
+        combo.ShowCombo(false);
         turnInactive.Turn();
         fallInactiveBlocks.InactiveFall();
     }
@@ -67,11 +74,20 @@ public class BlockControler : MonoBehaviour
         Debug.Log("Clear State");
         deleteBlocks.CheckEveryBlock();
     }
+    void OverState()
+    {
+        Debug.Log("Game Over");
+    }
     void Update()
     {
         if(state == 2)
         {
             moveBlocks.MoveInput();
+        }
+        if(state == 5)
+        {
+            gameOver.GameOverScreen(true);
+            gameOver.GameOverControler();
         }
     }
 }
