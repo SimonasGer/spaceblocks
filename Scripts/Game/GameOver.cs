@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 
 public class GameOver : MonoBehaviour
@@ -21,20 +22,9 @@ public class GameOver : MonoBehaviour
         }
         return false;
     }
-    public void GameOverScreen(bool show)
+    public void GameOverScreen()
     {
-        gameOverScreen.SetActive(show);
-    }
-    public void GameOverControler()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            
-        }
+        SceneManager.LoadScene("MainMenu");
+        File.Delete(Application.persistentDataPath + "/savegame.json");        
     }
 }

@@ -9,12 +9,6 @@ public class FallInactiveBlocks : MonoBehaviour
     public BlockControler blockControler;
     private TileBase tile;
     private bool anyTileFell = false;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
     public void InactiveFall()
     {   anyTileFell = false;
         foreach (Vector3Int position in bounds.allPositionsWithin)

@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class Score : MonoBehaviour
 {
-    private int score;
+    public int score;
     public TextMeshProUGUI scoreText;
+    void Start()
+    {
+        scoreText.text = "SCORE\n" + score.ToString();
+    }
     public void AddScore(int points)
     {
         score += points;

@@ -15,9 +15,12 @@ public class BlockControler : MonoBehaviour
     public GameOver gameOver;
     public TouchInput touchInput;
     public float gameSpeed, gamePace, maxSpeed;
+    public AutoSave autoSave;
+    public LoadGame loadGame;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        loadGame.Load();
         InvokeRepeating(nameof(Cycle), 1.0f, gameSpeed);
     }
     void Cycle()
@@ -61,6 +64,7 @@ public class BlockControler : MonoBehaviour
         {
             gameSpeed -= gamePace;
         }
+        autoSave.SaveGame();
         state = 2;
     }
     void MoveState()
@@ -94,8 +98,7 @@ public class BlockControler : MonoBehaviour
         }
         if(state == 5)
         {
-            gameOver.GameOverScreen(true);
-            gameOver.GameOverControler();
+            gameOver.GameOverScreen();
         }
     }
 }

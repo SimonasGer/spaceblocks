@@ -12,24 +12,24 @@ public class PreviewBlocks : MonoBehaviour
     public List<TileBase> activeColors;
     public ShapeData data;
     public TileBase[] tiles;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        previewBlocks = new List<Vector3Int>();
-    }
+    private bool gameStarted = true;
     public void ShowPreview()
-    {   
+    {   if(gameStarted && previewBlocks.Count > 0)
+        {   
+            preview.SetTiles(previewBlocks.ToArray(), previewColors.ToArray());
+            gameStarted = false;
+            return;
+        }
         previewBlocks.Clear();
         previewColors.Clear();
         preview.ClearAllTiles();
         int shape = Random.Range(0, data.shapes.Length);
         foreach (var block in data.shapes[shape].blockPositions)
         {   
-            previewBlocks.Add(block);
+            previewBlocks.Add(block + previewLocation);
             int tile = Random.Range(0, tiles.Length);
             previewColors.Add(tiles[tile]);
-            preview.SetTile(previewLocation + block, tiles[tile]);
+            preview.SetTile(block + previewLocation, tiles[tile]);
         }
         
     }
